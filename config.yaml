@@ -1,0 +1,58 @@
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
+name: vault-indexer
+contracts:
+  - name: V3Vault
+    abi_file_path: ./abis/V3Vault.json
+    handler: src/EventHandlers.ts
+    events:
+      - event: Add(uint256 indexed tokenId, address owner, uint256 oldTokenId)
+        field_selection:
+          transaction_fields:
+            - hash
+      - event: Remove(uint256 indexed tokenId, address owner, address recipient)
+        field_selection:
+          transaction_fields:
+            - hash
+      - event: Borrow(uint256 indexed tokenId, address owner, uint256 assets, uint256 shares)
+        field_selection:
+          transaction_fields:
+            - hash
+      - event: Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)
+        field_selection:
+          transaction_fields:
+            - hash
+      - event: ExchangeRateUpdate(uint256 debtExchangeRateX96, uint256 lendExchangeRateX96)
+      - event: Liquidate(uint256 indexed tokenId, address liquidator, address owner, uint256 value, uint256 cost, uint256 amount0, uint256 amount1, uint256 reserve, uint256 missing)
+        field_selection:
+          transaction_fields:
+            - hash
+      - event: Repay(uint256 indexed tokenId, address repayer, address owner, uint256 assets, uint256 shares)
+        field_selection:
+          transaction_fields:
+            - hash
+      - event: Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)
+        field_selection:
+          transaction_fields:
+            - hash
+      - event: WithdrawCollateral(uint256 indexed tokenId, address owner, address recipient, uint128 liquidity, uint256 amount0, uint256 amount1)
+        field_selection:
+          transaction_fields:
+            - hash
+networks:
+  - id: 42161
+    start_block: 240513631
+    contracts:
+      - name: V3Vault
+        address: "0x74e6afef5705beb126c6d3bf46f8fad8f3e07825"
+  - id: 8453
+    start_block: 31782197
+    contracts:
+      - name: V3Vault
+        address: "0x36aeae0e411a1e28372e0d66f02e57744ebe7599"
+  - id: 1
+    start_block: 22734461
+    contracts:
+      - name: V3Vault
+        address: "0xa2754543f69dc036764bbfad16d2a74f5cd15667"
+unordered_multichain_mode: true
+preload_handlers: true

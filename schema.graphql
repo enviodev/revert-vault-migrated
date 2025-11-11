@@ -1,0 +1,85 @@
+# Business Logic Entities (from original subgraph)
+
+type Vault {
+  id: ID!
+  asset: String!
+  decimals: BigInt!
+}
+
+type Lender {
+  id: ID!
+  address: String!
+  vault: Vault!
+  shares: BigInt!
+}
+
+type LenderSnapshot {
+  id: ID!
+  lender: Lender!
+  shares: BigInt!
+  lent: BigInt!
+  blockNumber: BigInt
+  blockTimestamp: BigInt!
+  transactionHash: String!
+}
+
+type Loan {
+  id: ID!
+  tokenId: BigInt!
+  vault: Vault!
+  shares: BigInt!
+  owner: String!
+  previousLoan: String
+  isExited: Boolean!
+}
+
+type LoanSnapshot {
+  id: ID!
+  loan: Loan!
+  shares: BigInt!
+  debt: BigInt!
+  collateralValue: BigInt!
+  fullValue: BigInt!
+  owner: String!
+  blockNumber: BigInt
+  blockTimestamp: BigInt!
+  transactionHash: String!
+  amountRepaid: BigInt
+  amountBorrowed: BigInt
+}
+
+type DailyExchangeRate {
+  id: ID!
+  day: BigInt!
+  vault: Vault!
+  blockNumber: BigInt
+  blockTimestamp: BigInt!
+  debtExchangeRate: BigDecimal!
+  lendExchangeRate: BigDecimal!
+}
+
+type HourlyExchangeRate {
+  id: ID!
+  hour: BigInt!
+  vault: Vault!
+  blockNumber: BigInt
+  blockTimestamp: BigInt!
+  debtExchangeRate: BigDecimal!
+  lendExchangeRate: BigDecimal!
+}
+
+type Liquidation {
+  id: ID!
+  loan: Loan!
+  liquidator: String!
+  owner: String!
+  value: BigInt!
+  cost: BigInt!
+  amount0: BigInt!
+  amount1: BigInt!
+  reserve: BigInt!
+  missing: BigInt!
+  blockNumber: BigInt
+  blockTimestamp: BigInt!
+  transactionHash: String!
+}

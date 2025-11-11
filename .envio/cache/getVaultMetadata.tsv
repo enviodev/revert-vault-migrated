@@ -1,0 +1,4 @@
+id	output
+{"chainId":1,"vaultAddress":"0xa2754543f69dC036764bBfad16d2A74F5cD15667"}	{"asset": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "decimals": 6}
+{"chainId":42161,"vaultAddress":"0x74E6AFeF5705BEb126C6d3Bf46f8fad8F3e07825"}	{"asset": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831", "decimals": 6}
+{"chainId":8453,"vaultAddress":"0x36AEAe0E411a1E28372e0d66f02E57744EbE7599"}	{"asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", "decimals": 6}
