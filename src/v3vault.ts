@@ -2,16 +2,7 @@
  * V3Vault Event Handlers
  * Mirrors original subgraph structure: vault-graph-main/src/v3vault.ts
  */
-import {
-  V3Vault,
-  BigDecimal,
-  Vault,
-  Loan,
-  Lender,
-  LoanSnapshot,
-  LenderSnapshot,
-  handlerContext,
-} from "generated";
+import { indexer, BigDecimal, Vault, Loan, Lender, LoanSnapshot, LenderSnapshot, handlerContext } from "envio";
 import { Liquidation_t } from "generated/src/db/Entities.gen";
 import { getVaultMetadata, getLoanInfo, getLendInfo } from "./effects/v3vaultEffects";
 
@@ -193,7 +184,9 @@ async function createLenderSnapshot(
   context.LenderSnapshot.set(snapshot);
 }
 
-V3Vault.Add.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "V3Vault", event: "Add" },
+  async ({ event, context }) => {
   const loan = await getLoan(
     event.params.tokenId,
     event.srcAddress,
@@ -236,9 +229,12 @@ V3Vault.Add.handler(async ({ event, context }) => {
     context,
     false
   );
-});
+}
+);
 
-V3Vault.Remove.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "V3Vault", event: "Remove" },
+  async ({ event, context }) => {
   const loan = await getLoan(
     event.params.tokenId,
     event.srcAddress,
@@ -263,9 +259,12 @@ V3Vault.Remove.handler(async ({ event, context }) => {
     context,
     true
   );
-});
+}
+);
 
-V3Vault.Borrow.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "V3Vault", event: "Borrow" },
+  async ({ event, context }) => {
   const loan = await getLoan(
     event.params.tokenId,
     event.srcAddress,
@@ -292,9 +291,12 @@ V3Vault.Borrow.handler(async ({ event, context }) => {
     undefined,
     event.params.assets
   );
-});
+}
+);
 
-V3Vault.Deposit.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "V3Vault", event: "Deposit" },
+  async ({ event, context }) => {
   const lender = await getLender(
     event.params.owner,
     event.srcAddress,
@@ -318,9 +320,12 @@ V3Vault.Deposit.handler(async ({ event, context }) => {
     event.transaction.hash,
     context
   );
-});
+}
+);
 
-V3Vault.ExchangeRateUpdate.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "V3Vault", event: "ExchangeRateUpdate" },
+  async ({ event, context }) => {
   const timestamp = Number(event.block.timestamp);
   const dayID = `${event.chainId}-${event.srcAddress}-${Math.floor(timestamp / 86400)}`;
   const hourID = `${event.chainId}-${event.srcAddress}-${Math.floor(timestamp / 3600)}`;
@@ -362,9 +367,12 @@ V3Vault.ExchangeRateUpdate.handler(async ({ event, context }) => {
     };
     context.HourlyExchangeRate.set(hourly);
   }
-});
+}
+);
 
-V3Vault.Liquidate.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "V3Vault", event: "Liquidate" },
+  async ({ event, context }) => {
   const loan = await getLoan(
     event.params.tokenId,
     event.srcAddress,
@@ -391,9 +399,12 @@ V3Vault.Liquidate.handler(async ({ event, context }) => {
   };
 
   context.Liquidation.set(liquidation);
-});
+}
+);
 
-V3Vault.Repay.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "V3Vault", event: "Repay" },
+  async ({ event, context }) => {
   const loan = await getLoan(
     event.params.tokenId,
     event.srcAddress,
@@ -420,9 +431,12 @@ V3Vault.Repay.handler(async ({ event, context }) => {
     event.params.assets,
     undefined
   );
-});
+}
+);
 
-V3Vault.Withdraw.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "V3Vault", event: "Withdraw" },
+  async ({ event, context }) => {
   const lender = await getLender(
     event.params.owner,
     event.srcAddress,
@@ -446,9 +460,12 @@ V3Vault.Withdraw.handler(async ({ event, context }) => {
     event.transaction.hash,
     context
   );
-});
+}
+);
 
-V3Vault.WithdrawCollateral.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "V3Vault", event: "WithdrawCollateral" },
+  async ({ event, context }) => {
   const loan = await getLoan(
     event.params.tokenId,
     event.srcAddress,
@@ -465,5 +482,6 @@ V3Vault.WithdrawCollateral.handler(async ({ event, context }) => {
     event.transaction.hash,
     context
   );
-});
+}
+);
 

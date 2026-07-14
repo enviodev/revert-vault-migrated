@@ -1,8 +1,5 @@
 import assert from "assert";
-import { 
-  TestHelpers,
-  V3Vault_Add
-} from "generated";
+import { TestHelpers, V3Vault_Add } from "envio";
 const { MockDb, V3Vault } = TestHelpers;
 
 describe("V3Vault contract Add event tests", () => {

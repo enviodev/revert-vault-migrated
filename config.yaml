@@ -38,7 +38,7 @@ contracts:
         field_selection:
           transaction_fields:
             - hash
-networks:
+chains:
   - id: 42161
     start_block: 240513631
     contracts:
@@ -54,5 +54,3 @@ networks:
     contracts:
       - name: V3Vault
         address: "0xa2754543f69dc036764bbfad16d2a74f5cd15667"
-unordered_multichain_mode: true
-preload_handlers: true
